@@ -40,6 +40,37 @@ def retrieve_result_page(query: str) -> str:
 
     return result_page
 
+def push_into_ResultItems(page: str) -> list:
+    '''
+    Parameters
+    ----------
+    page : str
+        DuckDuckGo result HTML page which contains the information about the search results
+        ex. "<!DOCTYPE html PUBLIC "-//W3C...</body></html>"
+    
+    Returns
+    ----------
+    results : list
+        The list of search results summarized in the ResultItem objects
+        ex. [ResultItem1, ResultItem2, ResultItem3, ...]
+    '''
+    # Retrieve the necessary results using BeautifulSoup
+    soup: BeautifulSoup = BeautifulSoup(page, "html.parser")
+    search_results: list = soup.find_all("div", attrs={"result", "result_links", "result_links_deep", "web-result"})
+    results: list = []
+    rank_count: int = 1
+    for item in search_results:
+        title = item.find("h2", attrs={"result__title", "result__a"}).get_text()
+        url: str = item.find("a", attrs={"result__url"})['href']
+        abstract: str = item.find("a", attrs={"result__snippet"}).get_text()
+        rank: int = rank_count
+        rank_count = rank_count + 1
+        result: ResultItem = ResultItem(title, url, "DuckDuckGo")
+        result.set_abstract(abstract)
+        result.set_rank(rank)
+        results.append(result)
+    return results
+
 def search(query):
     # Get the DuckDuckGo search result page for the query
     page = retrieve_result_page(query)
