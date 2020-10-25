@@ -3,9 +3,9 @@ from tld import get_tld
 
 class ResultItem:
     HIGHESTRANK = 1
-    LOWESTRANK = 10
-    DEFAULTRANK = 100
-    SEARCHENGINES = ["Google", "Yahoo!", "Bing", "Yandex"]
+    LOWESTRANK = 100
+    DEFAULTRANK = LOWESTRANK
+    SEARCHENGINES = ["Google", "Yahoo!", "Bing", "Yandex", "DuckDuckGo"]
 
     def __init__(self, title: str, url: str, engine: str, rank: int=DEFAULTRANK):
         # The title of the page
