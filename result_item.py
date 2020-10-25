@@ -26,7 +26,7 @@ class ResultItem:
 
     def set_url(self, url: str) -> bool:
         # if(re.fullmatch(r'https?://(([a-zA-Z0-9])+(\.))+([a-zA-Z]{2,})+/?', url) == None):
-        if(re.fullmatch(r"https?://[\w!?/+\-_~;.,*&@#$%=()'[\]]+", url) == None):
+        if(re.fullmatch(r"https?://[\w!?/+\-_~:;.,*&@#$%=()'[\]]+", url) == None):
             # When the format of the URL is wrong
             print("The format of the given URL if wrong: ", url)
             return False
